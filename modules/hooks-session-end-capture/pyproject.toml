@@ -1,0 +1,17 @@
+[project]
+name = "amplifier-module-hooks-session-end-capture"
+version = "0.1.0"
+description = "Amplifier module: session:end hook that triggers the Scribe agent to process raw captures"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []  # amplifier-core is a peer dep; project-memory-core is a sibling dev dep
+
+[project.entry-points."amplifier.modules"]
+hooks-session-end-capture = "amplifier_module_hooks_session_end_capture:mount"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["amplifier_module_hooks_session_end_capture"]
