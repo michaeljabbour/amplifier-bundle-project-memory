@@ -1,0 +1,45 @@
+bundle:
+  name: project-memory-behavior
+  version: 0.1.0
+  description: |
+    Mounts the project memory system: three hook modules for lifecycle capture,
+    one tool module for explicit CRUD, two agents (Scribe + Librarian), and
+    one skill for memory system guidance.
+
+hooks:
+  - module: hooks-memory-capture
+    source: ./modules/hooks-memory-capture       # TODO: git+https URL before release
+    config:
+      categories:
+        - decision
+        - architecture
+        - blocker
+        - resolved_blocker
+        - dependency
+        - pattern
+        - lesson_learned
+  - module: hooks-session-briefing
+    source: ./modules/hooks-session-briefing
+    config:
+      token_budget: 1500
+      ephemeral: true
+  - module: hooks-session-end-capture
+    source: ./modules/hooks-session-end-capture
+
+tools:
+  - module: tool-project-memory
+    source: ./modules/tool-project-memory
+  - module: tool-skills
+    source: git+https://github.com/microsoft/amplifier-module-tool-skills@main
+    config:
+      skills:
+        - "@project-memory:skills"
+
+agents:
+  include:
+    - project-memory:scribe
+    - project-memory:librarian
+
+context:
+  include:
+    - project-memory:context/instructions.md
