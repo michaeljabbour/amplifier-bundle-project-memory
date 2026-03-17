@@ -160,13 +160,13 @@ class TestModuleSourcesValid:
         return sources
 
     def test_behavior_module_sources(self):
-        """All source fields are valid local paths (./…) or git+https:// URIs."""
+        """All source fields are valid local paths (./… or ../…) or git+https:// URIs."""
         sources = self._collect_sources()
         assert len(sources) > 0, "No source fields found in behavior YAML"
         for source in sources:
-            valid = source.startswith("./") or source.startswith("git+https://")
+            valid = source.startswith("./") or source.startswith("../") or source.startswith("git+https://")
             assert valid, (
-                f"Source '{source}' is not a valid local path (./…) "
+                f"Source '{source}' is not a valid local path (./… or ../…) "
                 f"or git+https:// URI"
             )
 
