@@ -5,6 +5,13 @@ bundle:
   description: |
     Persistent project-scoped memory across sessions.
     Automatic capture via hooks, curated storage, session briefings.
+  bundlewizard:
+    packaged_at: 2026-03-17T11:24:43Z
+    level_score: 0.94
+    critic_verdict: PASS
+    tests_passed: 223
+    tests_failed: 0
+    commits: 7
 
 includes:
   - bundle: git+https://github.com/microsoft/amplifier-foundation@main
