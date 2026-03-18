@@ -1,10 +1,9 @@
 """Amplifier module: hooks for capturing tool and prompt events into the raw memory buffer."""
 
 import logging
-from pathlib import Path
 from typing import Any
 
-from project_memory_core import MemoryStore, extract_signals
+from project_memory_core import MemoryStore, extract_signals, resolve_db_path
 
 logger = logging.getLogger(__name__)
 
@@ -12,22 +11,6 @@ logger = logging.getLogger(__name__)
 DEFAULT_CATEGORIES: frozenset[str] = frozenset(
     {"decision", "architecture", "blocker", "resolved_blocker", "pattern"}
 )
-
-
-def _resolve_db_path(coordinator: Any) -> Path:
-    """Determine the memory DB path from the coordinator's project root.
-
-    Tries coordinator.project_root, then coordinator.context['project_root'],
-    then falls back to Path.cwd().  Creates the directory if absent.
-    """
-    project_root: Any = getattr(coordinator, "project_root", None)
-    if project_root is None:
-        context: dict[str, Any] = getattr(coordinator, "context", {}) or {}
-        project_root = context.get("project_root", Path.cwd())
-
-    db_dir = Path(project_root) / ".amplifier" / "project-memory"
-    db_dir.mkdir(parents=True, exist_ok=True)
-    return db_dir / "memory.db"
 
 
 def _extract_text(event: Any) -> str | None:
@@ -66,7 +49,7 @@ async def mount(
     curation by the Scribe agent at session end.
     """
     config = config or {}
-    db_path = _resolve_db_path(coordinator)
+    db_path = resolve_db_path(coordinator, create_dir=True)
     store = MemoryStore(db_path)
 
     min_confidence: float = config.get("min_confidence", 0.5)

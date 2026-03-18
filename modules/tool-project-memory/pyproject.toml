@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Amplifier module: explicit CRUD tool for reading and writing the project memory store"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-dependencies = []  # amplifier-core is a peer dep; project-memory-core is a sibling dev dep
+dependencies = ["project-memory-core"]  # amplifier-core is a peer dep provided by Amplifier runtime
 
 [project.entry-points."amplifier.modules"]
 tool-project-memory = "amplifier_module_tool_project_memory:mount"

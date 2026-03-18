@@ -11,6 +11,7 @@ from project_memory_core.decay import (
     DEFAULT_RELEVANCE_THRESHOLD,
 )
 from project_memory_core.heuristics import extract_signals, Signal
+from project_memory_core.paths import resolve_db_path
 
 __all__ = [
     "MemoryStore",
@@ -25,4 +26,5 @@ __all__ = [
     "DEFAULT_RELEVANCE_THRESHOLD",
     "extract_signals",
     "Signal",
+    "resolve_db_path",
 ]

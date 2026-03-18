@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Amplifier module: session:start hook that injects a project memory briefing into context"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-dependencies = []  # amplifier-core is a peer dep; project-memory-core is a sibling dev dep
+dependencies = ["project-memory-core"]  # amplifier-core is a peer dep provided by Amplifier runtime
 
 [project.entry-points."amplifier.modules"]
 hooks-session-briefing = "amplifier_module_hooks_session_briefing:mount"

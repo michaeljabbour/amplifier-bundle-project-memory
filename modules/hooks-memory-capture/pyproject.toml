@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Amplifier module: hooks for capturing tool and prompt events into the raw memory buffer"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-dependencies = []  # amplifier-core is a peer dep; project-memory-core is a sibling dev dep
+dependencies = ["project-memory-core"]  # amplifier-core is a peer dep provided by Amplifier runtime
 
 [project.entry-points."amplifier.modules"]
 hooks-memory-capture = "amplifier_module_hooks_memory_capture:mount"

@@ -8,7 +8,7 @@ bundle:
 
 hooks:
   - module: hooks-memory-capture
-    source: ../modules/hooks-memory-capture       # TODO: git+https URL before release
+    source: git+https://github.com/michaeljabbour/amplifier-bundle-project-memory@main#subdirectory=modules/hooks-memory-capture
     config:
       categories:
         - decision
@@ -19,16 +19,16 @@ hooks:
         - pattern
         - lesson_learned
   - module: hooks-session-briefing
-    source: ../modules/hooks-session-briefing
+    source: git+https://github.com/michaeljabbour/amplifier-bundle-project-memory@main#subdirectory=modules/hooks-session-briefing
     config:
       token_budget: 1500
       ephemeral: true
   - module: hooks-session-end-capture
-    source: ../modules/hooks-session-end-capture
+    source: git+https://github.com/michaeljabbour/amplifier-bundle-project-memory@main#subdirectory=modules/hooks-session-end-capture
 
 tools:
   - module: tool-project-memory
-    source: ../modules/tool-project-memory
+    source: git+https://github.com/michaeljabbour/amplifier-bundle-project-memory@main#subdirectory=modules/tool-project-memory
   - module: tool-skills
     source: git+https://github.com/microsoft/amplifier-module-tool-skills@main
     config:

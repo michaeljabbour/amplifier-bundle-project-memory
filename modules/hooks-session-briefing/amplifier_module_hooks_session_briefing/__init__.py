@@ -1,27 +1,11 @@
 """Amplifier module: session:start hook that injects a project memory briefing into context."""
 
 import logging
-from pathlib import Path
 from typing import Any
 
-from project_memory_core import MemoryStore
+from project_memory_core import MemoryStore, resolve_db_path
 
 logger = logging.getLogger(__name__)
-
-
-def _resolve_db_path(coordinator: Any) -> Path:
-    """Determine the memory DB path from the coordinator's project root.
-
-    Tries coordinator.project_root, then coordinator.context['project_root'],
-    then falls back to Path.cwd().  Does NOT create the directory — callers
-    must check whether the file exists before opening it.
-    """
-    project_root: Any = getattr(coordinator, "project_root", None)
-    if project_root is None:
-        context: dict[str, Any] = getattr(coordinator, "context", {}) or {}
-        project_root = context.get("project_root", Path.cwd())
-
-    return Path(project_root) / ".amplifier" / "project-memory" / "memory.db"
 
 
 async def mount(
@@ -40,7 +24,7 @@ async def mount(
 
     async def on_session_start(event: Any) -> None:  # noqa: ARG001
         """Generate and inject a memory briefing at session start."""
-        db_path = _resolve_db_path(coordinator)
+        db_path = resolve_db_path(coordinator)
 
         if not db_path.exists():
             logger.debug(
