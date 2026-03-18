@@ -238,6 +238,68 @@ def test_pattern_pattern_of():
 
 
 # ---------------------------------------------------------------------------
+# Dependency signals
+# ---------------------------------------------------------------------------
+
+
+def test_dependency_added_package():
+    """'Added package redis to requirements' triggers dependency signal."""
+    sigs = extract_signals("Added package redis to requirements")
+    dep_sigs = _by_type(sigs, "dependency")
+    assert len(dep_sigs) >= 1
+    assert dep_sigs[0].confidence >= 0.6
+
+
+def test_dependency_pinned_version():
+    """'Pinned to v2.1.0 for stability' triggers dependency signal."""
+    sigs = extract_signals("Pinned to v2.1.0 for stability")
+    assert any(s.signal_type == "dependency" for s in sigs)
+
+
+def test_dependency_upgraded():
+    """'Upgraded sqlalchemy from 1.4 to 2.0' triggers dependency signal."""
+    sigs = extract_signals("Upgraded sqlalchemy from 1.4 to 2.0")
+    assert any(s.signal_type == "dependency" for s in sigs)
+
+
+def test_dependency_no_false_positive():
+    """A generic sentence produces no dependency signal."""
+    sigs = extract_signals("The team completed the sprint retrospective today.")
+    assert not any(s.signal_type == "dependency" for s in sigs)
+
+
+# ---------------------------------------------------------------------------
+# Lesson-learned signals
+# ---------------------------------------------------------------------------
+
+
+def test_lesson_learned_explicit():
+    """'Lesson learned: always run migrations first' triggers lesson_learned signal."""
+    sigs = extract_signals("Lesson learned: always run migrations first")
+    ll_sigs = _by_type(sigs, "lesson_learned")
+    assert len(ll_sigs) >= 1
+    assert ll_sigs[0].confidence >= 0.6
+
+
+def test_lesson_learned_hindsight():
+    """'In hindsight, we should have used async' triggers lesson_learned signal."""
+    sigs = extract_signals("In hindsight, we should have used async from the start")
+    assert any(s.signal_type == "lesson_learned" for s in sigs)
+
+
+def test_lesson_learned_next_time():
+    """'Next time we should start with the schema' triggers lesson_learned signal."""
+    sigs = extract_signals("Next time we should start with the schema")
+    assert any(s.signal_type == "lesson_learned" for s in sigs)
+
+
+def test_lesson_learned_no_false_positive():
+    """A plain progress update produces no lesson_learned signal."""
+    sigs = extract_signals("Deployment to staging completed without errors.")
+    assert not any(s.signal_type == "lesson_learned" for s in sigs)
+
+
+# ---------------------------------------------------------------------------
 # Case insensitivity
 # ---------------------------------------------------------------------------
 

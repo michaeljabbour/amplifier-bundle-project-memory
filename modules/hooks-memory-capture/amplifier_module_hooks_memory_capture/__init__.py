@@ -9,7 +9,15 @@ logger = logging.getLogger(__name__)
 
 # All signal types the heuristics can detect
 DEFAULT_CATEGORIES: frozenset[str] = frozenset(
-    {"decision", "architecture", "blocker", "resolved_blocker", "pattern"}
+    {
+        "decision",
+        "architecture",
+        "blocker",
+        "resolved_blocker",
+        "dependency",
+        "pattern",
+        "lesson_learned",
+    }
 )
 
 
