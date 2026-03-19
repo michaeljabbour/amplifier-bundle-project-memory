@@ -5,7 +5,7 @@ from typing import NamedTuple
 
 
 class Signal(NamedTuple):
-    signal_type: str   # "decision" | "architecture" | "blocker" | "resolved_blocker" | "dependency" | "pattern" | "lesson_learned"
+    signal_type: str  # "decision" | "architecture" | "blocker" | "resolved_blocker" | "dependency" | "pattern" | "lesson_learned"
     matched_text: str  # substring that triggered the match
     confidence: float  # 0.0–1.0
 
@@ -70,8 +70,8 @@ SIGNAL_PATTERNS: dict[str, list[tuple[re.Pattern, float]]] = {
     "dependency": [
         (
             re.compile(
-                r"(?:added? (?:package|library|module)\b"
-                r"|installed? \w+"
+                r"(?:added? (?:library|module)\b"
+                r"|installed? (?:package|library|module)"
                 r"|pinned? (?:to |at )?v?\d"
                 r"|upgraded? \w+ (?:to|from)"
                 r"|requires? \w+ [><=!]"

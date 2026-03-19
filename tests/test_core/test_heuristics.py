@@ -242,9 +242,9 @@ def test_pattern_pattern_of():
 # ---------------------------------------------------------------------------
 
 
-def test_dependency_added_package():
-    """'Added package redis to requirements' triggers dependency signal."""
-    sigs = extract_signals("Added package redis to requirements")
+def test_dependency_added_library():
+    """'Added library redis to requirements' triggers dependency signal."""
+    sigs = extract_signals("Added library redis to requirements")
     dep_sigs = _by_type(sigs, "dependency")
     assert len(dep_sigs) >= 1
     assert dep_sigs[0].confidence >= 0.6
@@ -265,6 +265,19 @@ def test_dependency_upgraded():
 def test_dependency_no_false_positive():
     """A generic sentence produces no dependency signal."""
     sigs = extract_signals("The team completed the sprint retrospective today.")
+    assert not any(s.signal_type == "dependency" for s in sigs)
+
+
+def test_added_package_fires_architecture_not_dependency():
+    """'added package redis' must fire architecture but NOT dependency (P1: regex overlap fix)."""
+    sigs = extract_signals("Added package redis for caching.")
+    assert any(s.signal_type == "architecture" for s in sigs), "'added package' should fire architecture"
+    assert not any(s.signal_type == "dependency" for s in sigs), "'added package' must NOT double-fire dependency"
+
+
+def test_installed_successfully_no_false_positive():
+    """'installed successfully' must NOT fire dependency (P2: broad installed? pattern fix)."""
+    sigs = extract_signals("The server was installed successfully.")
     assert not any(s.signal_type == "dependency" for s in sigs)
 
 

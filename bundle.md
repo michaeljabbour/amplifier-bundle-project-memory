@@ -11,7 +11,7 @@ bundle:
     packaged_at: 2026-03-18T18:57:00Z
     level_score: 0.97
     critic_verdict: PASS
-    tests_passed: 223
+    tests_passed: 233
     commits: 8
 
 includes:
