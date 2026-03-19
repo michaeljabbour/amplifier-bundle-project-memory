@@ -8,11 +8,11 @@ bundle:
     Automatic capture via hooks, curated storage, session briefings.
   generated_by:
     tool: bundlewizard
-    packaged_at: 2026-03-18T18:57:00Z
-    level_score: 0.97
+    packaged_at: 2026-03-19T00:03:25Z
+    level_score: 0.99
     critic_verdict: PASS
     tests_passed: 233
-    commits: 8
+    commits: 12
 
 includes:
   - bundle: git+https://github.com/microsoft/amplifier-foundation@main
