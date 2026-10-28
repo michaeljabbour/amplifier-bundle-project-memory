@@ -1,3 +1,11 @@
+> **Archived legacy implementation — 2026-10-28.** For new work, use [Memory](https://michaeljabbour.github.io/amplifier-skill-memory/) and its [public native quickstart](https://github.com/michaeljabbour/amplifier-skill-memory/blob/main/docs/NATIVE-QUICKSTART.md). For a portable next-session task packet without a database, use [Project Handoff](https://michaeljabbour.github.io/amplifier-skill-project-handoff/).
+>
+> All original source and history remain available here, including the `project_memory` tool, SQLite schema, capture hooks, Scribe/Librarian agents, decay and forgetting behavior. The newer Memory is **not a drop-in behavioral or storage replacement**. Keep your existing setup and complete consistent DB/WAL backup until you review your own transition.
+>
+> A [bounded schema-1 archive bridge](https://github.com/michaeljabbour/amplifier-skill-memory/blob/main/docs/LEGACY-STORES.md) can preserve the three source tables as typed archival evidence in an explicit new native log. It does not carry over old decay/forget semantics, adopt old decisions as current facts or back up every SQLite internal table. Archiving this repository does not uninstall code, discover stores or migrate/delete any existing data. The original implementation below is retained unchanged; pin `cd61a7a9d5a09362385522aceb4326ee2a41e73b` when you need that exact revision.
+
+---
+
 # amplifier-bundle-project-memory
 
 Persistent project-scoped memory for Amplifier sessions. Hooks automatically
